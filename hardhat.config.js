@@ -2,9 +2,11 @@ require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
-require('@openzeppelin/hardhat-upgrades');
+require("@openzeppelin/hardhat-upgrades");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
+require("hardhat-contract-sizer");
+require("hardhat-storage-layout");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -23,48 +25,78 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 
-
-/**
-* @type import('hardhat/config').HardhatUserConfig
-*/
-
-require('dotenv').config();
-require("@nomiclabs/hardhat-ethers");
-
-const { ETH_RINKEBY_API_URL, ETH_RINKEBY_PRIVATE_KEY, ETH_MAINNET_API_URL, ETH_MAINNET_PRIVATE_KEY, ETHERSCAN_API_KEY } = process.env;
+const {
+  GOERLI_URL,
+  MUMBAI_URL,
+  PRIVATE_KEY,
+  MAINNET_URL,
+  POLYGON_URL,
+  ETHERSCAN_API_KEY,
+  POLYGONSCAN_API_KEY,
+} = process.env;
 
 module.exports = {
   solidity: {
-    version: "0.8.10",
+    compilers: [
+      {
+        version: "0.6.6",
+      },
+      {
+        version: "0.8.10",
+      },
+    ],
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
-  },
-   defaultNetwork: "rinkeby",
-   networks: {
-      hardhat: {},
-      eth_rinkeby: {
-         url: ETH_RINKEBY_API_URL,
-         gas: 4000000,
-         accounts: [`0x${ETH_RINKEBY_PRIVATE_KEY}`]
+        runs: 200,
       },
-      eth_mainnet: {
-        url: ETH_MAINNET_API_URL,
-        gasPrice: 140000000000,
-        gas: 3800000,
-        accounts: [`0x${ETH_MAINNET_PRIVATE_KEY}`]
-     }
-   },
-   etherscan: {
-    apiKey: ETHERSCAN_API_KEY,
+      outputSelection: {
+        "*": {
+          "*": ["storageLayout"],
+        },
+      },
+    },
+  },
+  defaultNetwork: "hardhat",
+  networks: {
+    hardhat: {
+      allowUnlimitedContractSize: true,
+    },
+    goerli: {
+      url: GOERLI_URL || "",
+      accounts: PRIVATE_KEY !== undefined ? [`0x${PRIVATE_KEY}`] : [],
+      allowUnlimitedContractSize: true,
+    },
+    mumbai: {
+      url: MUMBAI_URL || "",
+      accounts: PRIVATE_KEY !== undefined ? [`0x${PRIVATE_KEY}`] : [],
+    },
+    mainnet: {
+      url: MAINNET_URL || "",
+      gasPrice: 70000000000,
+      gas: 3400000,
+      accounts: PRIVATE_KEY !== undefined ? [`0x${PRIVATE_KEY}`] : [],
+    },
+    polygon: {
+      url: POLYGON_URL || "",
+      accounts: PRIVATE_KEY !== undefined ? [`0x${PRIVATE_KEY}`] : [],
+    },
+  },
+  etherscan: {
+    apiKey: POLYGONSCAN_API_KEY,
+  },
+  contractSizer: {
+    alphaSort: true,
+    runOnCompile: process.env.CONTRACT_SIZER !== undefined,
+    disambiguatePaths: false,
   },
   paths: {
     sources: "./contracts",
     tests: "./test",
     cache: "./cache",
-    artifacts: "./artifacts"
+    artifacts: "./artifacts",
   },
-}
+  gasReporter: {
+    enabled: !!process.env.REPORT_GAS,
+  },
+};
