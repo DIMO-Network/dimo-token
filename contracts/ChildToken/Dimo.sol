@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract Dimo is
+contract DimoChildToken is
     ERC20Upgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
@@ -27,11 +27,11 @@ contract Dimo is
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
-    function pause() public onlyRole(PAUSER_ROLE) {
+    function pause() external onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyRole(PAUSER_ROLE) {
+    function unpause() external onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -58,7 +58,7 @@ contract Dimo is
     }
 
     
-    function mint(address user, uint256 amount) public onlyRole(MINTER_ROLE) {
+    function mint(address user, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(user, amount);
     }
 
