@@ -36,15 +36,3 @@ contract ERC20PermitStorageV1 {
 	bytes32 private _PERMIT_TYPEHASH;
 	uint256[49] private __gap;
 }
-
-struct Checkpoint {
-	uint32 fromBlock;
-	uint224 votes;
-}
-
-contract ERC20VotesStorageV1 {
-	mapping(address => address) private _delegates;
-	mapping(address => Checkpoint[]) private _checkpoints;
-	Checkpoint[] private _totalSupplyCheckpoints;
-	uint256[47] private __gap;
-}
