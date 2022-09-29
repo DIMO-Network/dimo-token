@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract DimoChildToken is
+contract DimoChildTokenV1 is
     ERC20Upgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
@@ -35,7 +35,6 @@ contract DimoChildToken is
         _unpause();
     }
 
-    
     /// @notice called when token is deposited on root chain
     /// @dev Should be callable only by ChildChainManager
     /// Should handle deposit by minting the required amount for user
@@ -49,7 +48,6 @@ contract DimoChildToken is
         _mint(user, amount);
     }
 
-    
     /// @notice called when user wants to withdraw tokens back to root chain
     /// @dev Should burn user's tokens. This transaction will be verified when exiting on root chain
     /// @param amount amount of tokens to withdraw
@@ -57,7 +55,6 @@ contract DimoChildToken is
         _burn(_msgSender(), amount);
     }
 
-    
     function mint(address user, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(user, amount);
     }
