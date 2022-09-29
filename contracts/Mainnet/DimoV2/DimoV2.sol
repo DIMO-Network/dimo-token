@@ -4,7 +4,6 @@ pragma solidity ^0.8.10;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
@@ -19,7 +18,7 @@ contract DimoV2 is
     PausableUpgradeable,
     EIP712StorageV1,
     ERC20PermitStorageV1,
-    ERC20VotesUpgradeable,
+    ERC20VotesStorageV1,
     UUPSUpgradeable
 {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -41,14 +40,14 @@ contract DimoV2 is
 
     function _mint(address to, uint256 amount)
         internal
-        override(ERC20Upgradeable, ERC20VotesUpgradeable)
+        override
     {
         super._mint(to, amount);
     }
 
     function _burn(address account, uint256 amount)
         internal
-        override(ERC20Upgradeable, ERC20VotesUpgradeable)
+        override
     {
         super._burn(account, amount);
     }
@@ -57,7 +56,7 @@ contract DimoV2 is
         address from,
         address to,
         uint256 amount
-    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
+    ) internal override {
         super._afterTokenTransfer(from, to, amount);
     }
 
