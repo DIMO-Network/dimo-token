@@ -7,26 +7,20 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract DimoChildTokenV1 is
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
+
+contract DimoChildTokenV2 is
     ERC20Upgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
-    UUPSUpgradeable
+    UUPSUpgradeable,
+    ERC20VotesUpgradeable
 {
     bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-
-    function initialize() public initializer {
-        __ERC20_init("Dimo", "DIMO");
-        __AccessControl_init();
-        __Pausable_init();
-        __UUPSUpgradeable_init();
-
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
-
+    
     function pause() external onlyRole(PAUSER_ROLE) {
         _pause();
     }
@@ -35,11 +29,6 @@ contract DimoChildTokenV1 is
         _unpause();
     }
 
-    /// @notice called when token is deposited on root chain
-    /// @dev Should be callable only by ChildChainManager
-    /// Should handle deposit by minting the required amount for user
-    /// @param user user address for whom deposit is being done
-    /// @param depositData abi encoded amount
     function deposit(address user, bytes calldata depositData)
         external
         onlyRole(DEPOSITOR_ROLE)
@@ -48,15 +37,34 @@ contract DimoChildTokenV1 is
         _mint(user, amount);
     }
 
-    /// @notice called when user wants to withdraw tokens back to root chain
-    /// @dev Should burn user's tokens. This transaction will be verified when exiting on root chain
-    /// @param amount amount of tokens to withdraw
     function withdraw(uint256 amount) external {
         _burn(_msgSender(), amount);
     }
 
     function mint(address user, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(user, amount);
+    }
+
+    function _mint(address to, uint256 amount)
+        internal
+        override(ERC20Upgradeable, ERC20VotesUpgradeable) 
+    {
+        super._mint(to, amount);
+    }
+
+    function _burn(address account, uint256 amount)
+        internal
+        override(ERC20Upgradeable, ERC20VotesUpgradeable) 
+    {
+        super._burn(account, amount);
+    }
+
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable)  {
+        super._afterTokenTransfer(from, to, amount);
     }
 
     function _beforeTokenTransfer(
