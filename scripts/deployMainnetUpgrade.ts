@@ -1,4 +1,4 @@
-const { ethers, upgrades } = require("hardhat");
+import { ethers, upgrades } from "hardhat";
 
 const dimoV1Address = "0x0";
 
@@ -6,8 +6,8 @@ async function main() {
   const [owner, user1] = await ethers.getSigners();
 
   const DimoV2 = await ethers.getContractFactory("DimoV2");
-  console.log("New version DimoV2 deployed to: ", DimoV2.address);
   const upgraded = await upgrades.upgradeProxy(dimoV1Address, DimoV2);
+  console.log("New version DimoV2 deployed to: ", upgraded.address);
   await upgraded.deployed();
 
   const implAddress2 = await upgrades.erc1967.getImplementationAddress(

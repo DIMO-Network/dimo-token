@@ -3,6 +3,7 @@ import "@nomicfoundation/hardhat-toolbox";
 import '@openzeppelin/hardhat-upgrades';
 import 'hardhat-contract-sizer';
 import 'hardhat-storage-layout';
+import './scripts/linearization';
 
 const config: HardhatUserConfig = {
   solidity: {

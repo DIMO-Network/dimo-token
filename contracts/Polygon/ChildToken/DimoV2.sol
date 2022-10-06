@@ -2,6 +2,7 @@
 pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
@@ -11,6 +12,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 
 contract DimoChildTokenV2 is
     ERC20Upgradeable,
+    ERC165Upgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
     UUPSUpgradeable,
@@ -20,7 +22,7 @@ contract DimoChildTokenV2 is
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-    
+
     function pause() external onlyRole(PAUSER_ROLE) {
         _pause();
     }
@@ -80,4 +82,8 @@ contract DimoChildTokenV2 is
         override
         onlyRole(UPGRADER_ROLE)
     {}
+
+    function supportsInterface(bytes4 interfaceId) public pure override(AccessControlUpgradeable, ERC165Upgradeable) returns (bool) {
+        return interfaceId == type(IERC165Upgradeable).interfaceId;
+    }
 }

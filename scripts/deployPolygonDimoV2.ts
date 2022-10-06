@@ -14,7 +14,6 @@ async function main() {
   await dimo.grantRole(await dimo.UPGRADER_ROLE(), owner.address);
 
   const DimoChildTokenV2 = await ethers.getContractFactory("DimoChildTokenV2");
-  // const upgraded = await upgrades.validateUpgrade(dimo.address, DimoChildTokenV2);
   const upgraded = await upgrades.upgradeProxy(dimo.address, DimoChildTokenV2, {
     unsafeSkipStorageCheck: false,
   });
