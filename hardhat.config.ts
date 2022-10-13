@@ -1,9 +1,13 @@
+import * as dotenv from 'dotenv';
+
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import '@openzeppelin/hardhat-upgrades';
 import 'hardhat-contract-sizer';
 import 'hardhat-storage-layout';
 import './scripts/linearization';
+
+dotenv.config();
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -50,7 +54,11 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: process.env.POLYGONSCAN_API_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY || "",
+      polygon: process.env.POLYGONSCAN_API_KEY || "",
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY || ""
+    }
   },
   contractSizer: {
     alphaSort: true,
