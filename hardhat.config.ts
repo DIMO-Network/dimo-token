@@ -5,6 +5,7 @@ import "@nomicfoundation/hardhat-toolbox";
 import '@openzeppelin/hardhat-upgrades';
 import 'hardhat-contract-sizer';
 import 'hardhat-storage-layout';
+import 'hardhat-tracer';
 import './scripts/linearization';
 
 dotenv.config();
@@ -14,19 +15,19 @@ const config: HardhatUserConfig = {
     compilers: [
       {
         version: "0.8.17",
-      },
-    ],
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-      outputSelection: {
-        "*": {
-          "*": ["storageLayout"],
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1000,
+          },
+          outputSelection: {
+            "*": {
+              "*": ["storageLayout"],
+            },
+          },
         },
       },
-    },
+    ],
   },
   defaultNetwork: "hardhat",
   networks: {
@@ -39,6 +40,7 @@ const config: HardhatUserConfig = {
       allowUnlimitedContractSize: true,
     },
     mumbai: {
+      allowUnlimitedContractSize: true,
       url: process.env.MUMBAI_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
@@ -49,6 +51,7 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     polygon: {
+      allowUnlimitedContractSize: true,
       url: process.env.POLYGON_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
