@@ -1,4 +1,4 @@
-import { ethers, upgrades, network } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 const DIMO_MAINNET_ADDRESS = '0x5fab9761d60419c9eeebe3915a8fa1ed7e8d2e1b';
 const DIMO_ADDRESS = '0xe261d618a959afffd53168cd07d12e37b26761db';

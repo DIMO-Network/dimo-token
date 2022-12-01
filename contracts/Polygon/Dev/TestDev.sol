@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
-contract Dimo is
+contract TestDev is
     ERC20Upgradeable,
     ERC165Upgradeable,
     AccessControlUpgradeable,
@@ -18,14 +18,13 @@ contract Dimo is
     UUPSUpgradeable,
     ERC20VotesUpgradeable
 {
-    bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
 
     function initialize() public initializer {
-        __ERC20_init("Dimo", "DIMO");
+        __ERC20_init("TestDev", "TD");
         __ERC165_init();
         __AccessControl_init();
         __Pausable_init();
@@ -42,14 +41,6 @@ contract Dimo is
         _unpause();
     }
 
-    function deposit(address user, bytes calldata depositData)
-        external
-        onlyRole(DEPOSITOR_ROLE)
-    {
-        uint256 amount = abi.decode(depositData, (uint256));
-        ERC20VotesUpgradeable._mint(user, amount);
-    }
-
     function withdraw(uint256 amount) external {
         ERC20VotesUpgradeable._burn(_msgSender(), amount);
     }
@@ -60,15 +51,6 @@ contract Dimo is
 
     function burn(address user, uint256 amount) external onlyRole(BURNER_ROLE) {
         ERC20VotesUpgradeable._burn(user, amount);
-    }
-
-    function writeTotalSupplyCheckpoint()
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
-        uint256 amount = totalSupply();
-        ERC20VotesUpgradeable._mint(_msgSender(), amount);
-        ERC20Upgradeable._burn(_msgSender(), amount);
     }
 
     function supportsInterface(bytes4 interfaceId)
