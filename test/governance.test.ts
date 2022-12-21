@@ -9,13 +9,13 @@ import {
 } from "../utils/constants"
 import { mine } from "@nomicfoundation/hardhat-network-helpers";
 
-describe.only("Governor Flow", async () => {
+describe("Governor Flow", async () => {
     let governor: DimoGovernor
     let governanceToken: Dimo
     let timeLock: TimeLock
     const voteWay = 1 // for
     const reason = "My reason"
-    
+
 
     beforeEach(async () => {
         const [owner] = await ethers.getSigners();
@@ -77,7 +77,7 @@ describe.only("Governor Flow", async () => {
         const amountToMint = 100;
         const initialTotalSupply = await governanceToken.totalSupply();
         const finalTotalSupply = initialTotalSupply.add(amountToMint);
-        
+
         // propose
         console.log("Proposing...")
         const encodedFunctionCall = governanceToken.interface.encodeFunctionData("mint", [owner.address, amountToMint])
@@ -125,7 +125,7 @@ describe.only("Governor Flow", async () => {
         const amountToBurn = 100;
         const initialTotalSupply = await governanceToken.totalSupply();
         const finalTotalSupply = initialTotalSupply.sub(amountToBurn);
-        
+
         // propose
         console.log("Proposing...")
         const encodedFunctionCall = governanceToken.interface.encodeFunctionData("burn", [owner.address, amountToBurn])
@@ -166,5 +166,56 @@ describe.only("Governor Flow", async () => {
         await exTx.wait(1)
 
         assert.equal((await governanceToken.totalSupply()).toString(), finalTotalSupply.toString());
+    })
+
+
+
+    it("proposes, votes, waits, queues, and then executes burning proposal", async () => {
+        const [owner] = await ethers.getSigners();
+        console.log(await governor["quorumNumerator()"]());
+
+        // propose
+        console.log("Proposing...")
+        const encodedFunctionCall = governor.interface.encodeFunctionData("updateQuorumNumerator", [5])
+        const proposeTx = await governor.propose(
+            [governor.address],
+            [0],
+            [encodedFunctionCall],
+            PROPOSAL_DESCRIPTION
+        )
+        const proposeReceipt = await proposeTx.wait(1)
+        const proposalId = proposeReceipt.events![0].args!.proposalId
+        let proposalState = await governor.state(proposalId)
+        console.log(`Current Proposal State: ${proposalState}`)
+
+        await mine(VOTING_DELAY + 1)
+        await ethers.provider.send("evm_increaseTime", [VOTING_DELAY + 1]);
+
+        // vote
+        console.log("Voting...")
+        const voteTx = await governor.castVoteWithReason(proposalId, voteWay, reason)
+        await voteTx.wait(1)
+        proposalState = await governor.state(proposalId)
+        assert.equal(proposalState.toString(), "1")
+        console.log(`Current Proposal State: ${proposalState}`)
+        await mine(VOTING_PERIOD + 1)
+
+        // queue
+        console.log("Queueing...")
+        const descriptionHash = ethers.utils.id(PROPOSAL_DESCRIPTION)
+        const queueTx = await governor.connect(owner).queue([governor.address], [0], [encodedFunctionCall], descriptionHash)
+        await queueTx.wait(1)
+        await ethers.provider.send("evm_increaseTime", [MIN_DELAY + 1]);
+        await mine(1)
+        proposalState = await governor.state(proposalId)
+        assert.equal(proposalState.toString(), "5")
+        console.log(`Current Proposal State: ${proposalState}`)
+
+        // execute
+        console.log("Executing...")
+        const exTx = await governor.execute([governor.address], [0], [encodedFunctionCall], descriptionHash)
+        await exTx.wait(1)
+
+        console.log(await governor["quorumNumerator()"]());
     })
 })
