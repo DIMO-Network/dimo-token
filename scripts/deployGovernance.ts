@@ -23,12 +23,12 @@ async function main() {
     },
   );
 
-  // let timelock = await upgrades.deployProxy(TimeLock, [21600, [], [], owner.address], {
-  //   initializer: "initialize",
-  //   kind: 'uups'
-  // });
-  // await timelock.deployed();
-  // console.log("TimeLock deployed to ", timelock.address);
+  let timelock = await upgrades.deployProxy(TimeLock, [21600, [], [], owner.address], {
+    initializer: "initialize",
+    kind: 'uups'
+  });
+  await timelock.deployed();
+  console.log("TimeLock deployed to ", timelock.address);
 
   let dimoGovernor = await upgrades.deployProxy(DimoGovernor, [DIMO_ADDRESS, TIMELOCK_ADDRESS], {
     initializer: "initialize",
