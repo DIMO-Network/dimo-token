@@ -7,8 +7,8 @@
     "build": "npx hardhat clean && npx hardhat compile",
     "test": "npx hardhat test"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "DIMO",
+  "license": "BUSL-1.1",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
