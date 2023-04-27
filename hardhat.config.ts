@@ -7,6 +7,7 @@ import 'hardhat-contract-sizer';
 import 'hardhat-storage-layout';
 import 'hardhat-tracer';
 import './scripts/linearization';
+import 'hardhat-abi-exporter';
 
 dotenv.config();
 
@@ -76,6 +77,12 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     enabled: !!process.env.REPORT_GAS,
+  },
+  abiExporter: {
+    path: './abis',
+    runOnCompile: true,
+    only: [':Dimo$'],
+    format: 'json'
   }
 };
 
