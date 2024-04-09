@@ -1,9 +1,12 @@
 import { ethers, upgrades } from "hardhat";
 
 async function main() {
-  const Dimo = await ethers.getContractFactory("Dimo");
+  const DimoFactory = await ethers.getContractFactory("Dimo");
   console.log("Deploying proxy and implementation.");
-  const dimo = await upgrades.deployProxy(Dimo);
+  const dimo = await upgrades.deployProxy(DimoFactory, {
+    initializer: "initialize",
+    kind: 'uups'
+  });
   await dimo.deployed();
   console.log("Deployment Success.");
   const implAddress = await upgrades.erc1967.getImplementationAddress(dimo.address);

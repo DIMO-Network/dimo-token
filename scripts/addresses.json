@@ -1,0 +1,46 @@
+{
+    "mainnet": {
+        "Dimo": {
+            "proxy": "0x5fab9761d60419c9eeebe3915a8fa1ed7e8d2e1b",
+            "implementation": "0xc67872EB67cdaB3d42270D100c491fd70ab1A448"
+        }
+    },
+    "polygon": {
+        "Dimo": {
+            "proxy": "0xe261d618a959afffd53168cd07d12e37b26761db",
+            "implementation": "0x379e5770d36Bf563C267097E3fA54DdCcbEFC00B"
+        },
+        "TestDev": {
+            "proxy": "0xf03952D15AD15187D79e8eF4611A41F2D034b368",
+            "implementation": "0xe0ac3E80B3B266C53272aE3dBE2BE91654c3decb"
+        },
+        "TimeLock": {
+            "proxy": "0x9F9859757b95100E2eC3d5E344608Dbe361dAaf4",
+            "implementation": "0x2Bb16aaE51e016226909DD69F3a2Aa9875f73156"
+        },
+        "DimoGovernor": {
+            "proxy": "0xd203e37d96cc0b9b7dc00fc3fdfcf1b1a2e8c547",
+            "implementation": "0x5fEE07De7406902c335664E278216bf9b0d1c597"
+        }
+    },
+    "mumbai": {
+        "Dimo": {
+            "proxy": "0x80ee7ec4493a1d7975ab900f94db25ba7c688201",
+            "implementation": "0xEb06fe95CC5f499c74FAFE347389F9F591e7ff62"
+        }
+    },
+    "amoy": {
+        "Dimo": {
+            "proxy": "0x21cFE003997fB7c2B3cfe5cf71e7833B7B2eCe10",
+            "implementation": "0x05e044bC83B1D2158dBd31ECAfC9210319fb742d"
+        },
+        "TimeLock": {
+            "proxy": "0xdc2f725b63bdefd3154da22d0ec9fa5808ae7e2a",
+            "implementation": "0xbd56f4df42c71d65f1748fdfc38eb824b66ca467"
+        },
+        "DimoGovernor": {
+            "proxy": "0x56719c69b665123ada4f740b1386ec60e1ad701b",
+            "implementation": "0x175b8196a9c922b4f512904c1632469f7fcb78c6"
+        }
+    }
+}
