@@ -19,7 +19,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 1000,
+            runs: 200,
           },
           outputSelection: {
             "*": {
@@ -47,13 +47,16 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: process.env.MAINNET_URL || "",
-      gasPrice: 70000000000,
-      gas: 3400000,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
     polygon: {
       allowUnlimitedContractSize: true,
       url: process.env.POLYGON_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    amoy: {
+      allowUnlimitedContractSize: true,
+      url: process.env.AMOY_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },

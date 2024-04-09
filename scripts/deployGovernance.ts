@@ -1,7 +1,6 @@
 import { ethers, upgrades } from "hardhat";
 
-const DIMO_ADDRESS = '0xe261d618a959afffd53168cd07d12e37b26761db';
-const TIMELOCK_ADDRESS = '0x9F9859757b95100E2eC3d5E344608Dbe361dAaf4';
+const DIMO_ADDRESS = '0x21cFE003997fB7c2B3cfe5cf71e7833B7B2eCe10';
 
 async function main() {
   const [owner] = await ethers.getSigners();
@@ -30,7 +29,7 @@ async function main() {
   await timelock.deployed();
   console.log("TimeLock deployed to ", timelock.address);
 
-  let dimoGovernor = await upgrades.deployProxy(DimoGovernor, [DIMO_ADDRESS, TIMELOCK_ADDRESS], {
+  let dimoGovernor = await upgrades.deployProxy(DimoGovernor, [DIMO_ADDRESS, timelock.address], {
     initializer: "initialize",
     kind: 'uups'
   });
