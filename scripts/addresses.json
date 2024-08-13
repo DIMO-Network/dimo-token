@@ -32,7 +32,7 @@
     "amoy": {
         "Dimo": {
             "proxy": "0x21cFE003997fB7c2B3cfe5cf71e7833B7B2eCe10",
-            "implementation": "0x05e044bC83B1D2158dBd31ECAfC9210319fb742d"
+            "implementation": "0x2B06014980c3d28644241ba87b8518C236c4B75b"
         },
         "TimeLock": {
             "proxy": "0xdc2f725b63bdefd3154da22d0ec9fa5808ae7e2a",
