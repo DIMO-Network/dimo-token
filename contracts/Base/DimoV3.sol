@@ -15,6 +15,7 @@ contract Dimo is
     PausableUpgradeable,
     UUPSUpgradeable,
     ERC20VotesUpgradeable
+    //do we need to add the OptimismInteface
 {
     bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -26,6 +27,10 @@ contract Dimo is
     address public immutable BRIDGE;
     uint8 public immutable DECIMALS;
 
+    event Mint(address indexed account, uint256 amount);
+    event Burn(address indexed account, uint256 amount);
+
+    //0x3154Cf16ccdb4C6d922629664174b904d80F2C35
     function initialize(address _bridge, address _remoteToken, uint8 _decimals) public initializer {
         __ERC20_init("Dimo", "DIMO");
         __ERC165_init();
@@ -35,8 +40,8 @@ contract Dimo is
         __ERC20Votes_init();
         __UUPSUpgradeable_init();
 
-        REMOTE_TOKEN = _remoteToken;
-        BRIDGE = _bridge;
+        REMOTE_TOKEN = _remoteToken; //0x5fd
+        BRIDGE = _bridge; //
         DECIMALS = _decimals;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -54,10 +59,12 @@ contract Dimo is
 
     function mint(address to, uint256 amount) external onlyRole(MINTER_ROLE) {
         _mint(to, amount);
+        emit Mint(to, amount);
     }
 
     function burn(address _from, uint256 _amount) external onlyRole(BURNER_ROLE) {
         _burn(_from, _amount);
+        emit(Burn(_from, _amount));
     }
 
     function remoteToken() public view override returns (address) {
