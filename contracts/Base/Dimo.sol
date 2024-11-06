@@ -30,6 +30,7 @@ contract Dimo is
 
     address public REMOTE_TOKEN;
     address public BRIDGE;
+    uint8 public DECIMALS;
 
     event Mint(address indexed account, uint256 amount);
     event Burn(address indexed account, uint256 amount);
@@ -56,6 +57,7 @@ contract Dimo is
 
         REMOTE_TOKEN = _remoteToken;
         BRIDGE = _bridge;
+        DECIMALS = 18;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, BRIDGE);
@@ -144,6 +146,18 @@ contract Dimo is
      */
     function bridge() public view override returns (address) {
         return BRIDGE;
+    }
+
+    /**
+     * @dev Returns the number of decimals used to get its user representation
+     * For example, if `decimals` equals `2`, a balance of `505` tokens should
+     * be displayed to a user as `5.05` (`505 / 10 ** 2`).
+     * NOTE: This information is only used for _display_ purposes: it in
+     * no way affects any of the arithmetic of the contract, including
+     * {IERC20-balanceOf} and {IERC20-transfer}.
+     */
+    function decimals() public view override returns (uint8) {
+        return DECIMALS;
     }
 
     /**
