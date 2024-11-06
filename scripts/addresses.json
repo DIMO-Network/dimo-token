@@ -42,5 +42,14 @@
             "proxy": "0x56719c69b665123ada4f740b1386ec60e1ad701b",
             "implementation": "0x175b8196a9c922b4f512904c1632469f7fcb78c6"
         }
+    },
+    "base": {
+        "Dimo": {
+            "proxy": "",
+            "implementation": ""
+        },
+        "bridge": {
+            "address": "0x4200000000000000000000000000000000000010"
+        }
     }
 }

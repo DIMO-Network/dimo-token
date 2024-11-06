@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -324,33 +329,7 @@
   },
   {
     "inputs": [],
-    "name": "DECIMALS",
-    "outputs": [
-      {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "DEPOSITOR_ROLE",
     "outputs": [
       {
         "internalType": "bytes32",
@@ -509,19 +488,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "burn",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_from",
         "type": "address"
@@ -533,24 +499,6 @@
       }
     ],
     "name": "burn",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "burnFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -856,11 +804,6 @@
         "internalType": "address",
         "name": "_remoteToken",
         "type": "address"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_decimals",
-        "type": "uint8"
       }
     ],
     "name": "initialize",
@@ -871,6 +814,19 @@
   {
     "inputs": [],
     "name": "l1Token",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "l2Bridge",
     "outputs": [
       {
         "internalType": "address",

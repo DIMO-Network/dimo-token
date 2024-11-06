@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
 import {IOptimismMintableERC20, ILegacyMintableERC20} from "./IOptimismMintableERC20.sol";
 
+/**
+ * @title Dimo
+ * @dev DIMO is an ERC20 token deployed on the Base network. It was bridged from the Ethereum mainnet
+ */
 contract Dimo is
     Initializable,
     ERC20Upgradeable,
-    ERC20BurnableUpgradeable,
     ERC20VotesUpgradeable,
     AccessControlUpgradeable,
     PausableUpgradeable,
@@ -38,34 +39,51 @@ contract Dimo is
         _disableInitializers();
     }
 
+    /**
+     * @notice Initializes the contract
+     * @param _bridge The address of the bridge contract
+     * @param _remoteToken The address of the remote token on Ethereum Mainnet
+     */
     function initialize(
         address _bridge,
         address _remoteToken
     ) public initializer {
         __ERC20_init("Dimo", "DIMO");
-        __ERC165_init();
-        __ERC20Burnable_init();
+        __ERC20Votes_init();
         __AccessControl_init();
         __Pausable_init();
-        __ERC20Votes_init();
         __UUPSUpgradeable_init();
 
         REMOTE_TOKEN = _remoteToken;
         BRIDGE = _bridge;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(MINTER_ROLE, _bridge);
-        _setupRole(BURNER_ROLE, _bridge);
+        _setupRole(MINTER_ROLE, BRIDGE);
+        _setupRole(BURNER_ROLE, BRIDGE);
     }
 
+    /**
+     * @notice Pauses the contract
+     * @dev Can only be called by accounts with the PAUSER_ROLE
+     */
     function pause() external onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
+    /**
+     * @notice Unpauses the contract
+     * @dev Can only be called by accounts with the PAUSER_ROLE
+     */
     function unpause() external onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
+    /**
+     * @notice Mints new tokens
+     * @param to The address to mint tokens to
+     * @param amount The amount of tokens to mint
+     * @dev Can only be called by accounts with the MINTER_ROLE
+     */
     function mint(
         address to,
         uint256 amount
@@ -78,6 +96,12 @@ contract Dimo is
         emit Mint(to, amount);
     }
 
+    /**
+     * @notice Burns tokens
+     * @param _from The address to burn tokens from
+     * @param _amount The amount of tokens to burn
+     * @dev Can only be called by accounts with the BURNER_ROLE
+     */
     function burn(
         address _from,
         uint256 _amount
@@ -90,18 +114,41 @@ contract Dimo is
         emit Burn(_from, _amount);
     }
 
-    function remoteToken() public view override returns (address) {
-        return REMOTE_TOKEN;
-    }
-
-    function bridge() public view override returns (address) {
-        return BRIDGE;
-    }
-
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for the remote token. Use REMOTE_TOKEN going forward.
+     */
     function l1Token() public view override returns (address) {
         return REMOTE_TOKEN;
     }
 
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for the bridge. Use BRIDGE going forward.
+     */
+    function l2Bridge() public view returns (address) {
+        return BRIDGE;
+    }
+
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for REMOTE_TOKEN.
+     */
+    function remoteToken() public view override returns (address) {
+        return REMOTE_TOKEN;
+    }
+
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for BRIDGE.
+     */
+    function bridge() public view override returns (address) {
+        return BRIDGE;
+    }
+
+    /**
+     * @notice Required override
+     */
     function _mint(
         address to,
         uint256 amount
@@ -109,6 +156,9 @@ contract Dimo is
         super._mint(to, amount);
     }
 
+    /**
+     * @notice Required override
+     */
     function _burn(
         address account,
         uint256 amount
@@ -116,6 +166,9 @@ contract Dimo is
         super._burn(account, amount);
     }
 
+    /**
+     * @notice Required override
+     */
     function _afterTokenTransfer(
         address from,
         address to,
@@ -124,6 +177,9 @@ contract Dimo is
         super._afterTokenTransfer(from, to, amount);
     }
 
+    /**
+     * @notice Required override
+     */
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -132,10 +188,19 @@ contract Dimo is
         super._beforeTokenTransfer(from, to, amount);
     }
 
+    /**
+     * @notice Authorizes an upgrade of the contract
+     * @dev Can only be called by accounts with the UPGRADER_ROLE
+     */
     function _authorizeUpgrade(
         address newImplementation
     ) internal override onlyRole(UPGRADER_ROLE) {}
 
+    /**
+     * @notice ERC165 interface check function
+     * @param interfaceId Interface ID to check
+     * @return Whether or not the interface is supported by this contract
+     */
     function supportsInterface(
         bytes4 interfaceId
     )
