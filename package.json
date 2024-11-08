@@ -13,7 +13,7 @@
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "@openzeppelin/hardhat-upgrades": "^1.21.0",
     "dotenv": "^16.0.2",
-    "hardhat": "^2.11.2",
+    "hardhat": "^2.22.15",
     "hardhat-abi-exporter": "^2.10.1",
     "hardhat-contract-sizer": "^2.6.1",
     "hardhat-storage-layout": "^0.1.7",
@@ -22,6 +22,9 @@
     "prettier-plugin-solidity": "^1.0.0-beta.24"
   },
   "dependencies": {
+    "@eth-optimism/contracts": "^0.6.0",
+    "@eth-optimism/contracts-bedrock": "^0.17.3",
+    "@eth-optimism/contracts-ts": "^0.17.2",
     "@openzeppelin/contracts": "^4.7.3",
     "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1"
   }
