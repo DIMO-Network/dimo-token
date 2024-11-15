@@ -32,7 +32,7 @@
     "amoy": {
         "Dimo": {
             "proxy": "0x21cFE003997fB7c2B3cfe5cf71e7833B7B2eCe10",
-            "implementation": "0x05e044bC83B1D2158dBd31ECAfC9210319fb742d"
+            "implementation": "0x2B06014980c3d28644241ba87b8518C236c4B75b"
         },
         "TimeLock": {
             "proxy": "0xdc2f725b63bdefd3154da22d0ec9fa5808ae7e2a",
@@ -41,6 +41,24 @@
         "DimoGovernor": {
             "proxy": "0x56719c69b665123ada4f740b1386ec60e1ad701b",
             "implementation": "0x175b8196a9c922b4f512904c1632469f7fcb78c6"
+        }
+    },
+    "base": {
+        "Dimo": {
+            "proxy": "0x5eAA326fB2fc97fAcCe6A79A304876daD0F2e96c",
+            "implementation": "0x6c14212837e6F0BCc7D6dbb48B3Ff89E4AD1c3C3"
+        },
+        "bridge": {
+            "address": "0x4200000000000000000000000000000000000010"
+        }
+    },
+    "optimism": {
+        "Dimo": {
+            "proxy": "0x5eAA326fB2fc97fAcCe6A79A304876daD0F2e96c",
+            "implementation": "0x6c14212837e6F0BCc7D6dbb48B3Ff89E4AD1c3C3"
+        },
+        "bridge": {
+            "address": "0x4200000000000000000000000000000000000010"
         }
     }
 }

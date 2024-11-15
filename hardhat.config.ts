@@ -7,6 +7,7 @@ import 'hardhat-contract-sizer';
 import 'hardhat-storage-layout';
 import 'hardhat-tracer';
 import './scripts/linearization';
+import 'hardhat-abi-exporter';
 
 dotenv.config();
 
@@ -34,16 +35,6 @@ const config: HardhatUserConfig = {
     hardhat: {
       allowUnlimitedContractSize: true,
     },
-    goerli: {
-      url: process.env.GOERLI_URL || "",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      allowUnlimitedContractSize: true,
-    },
-    mumbai: {
-      allowUnlimitedContractSize: true,
-      url: process.env.MUMBAI_URL || "",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-    },
     mainnet: {
       url: process.env.MAINNET_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
@@ -58,13 +49,30 @@ const config: HardhatUserConfig = {
       url: process.env.AMOY_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
+    base: {
+      allowUnlimitedContractSize: true,
+      url: process.env.BASE_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    "base-sepolia": {
+      allowUnlimitedContractSize: true,
+      url: process.env.BASE_SEPOLIA_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    optimisticEthereum: {
+      allowUnlimitedContractSize: true,
+      url: process.env.OP_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    }
   },
   etherscan: {
     apiKey: {
       mainnet: process.env.ETHERSCAN_API_KEY || "",
       polygon: process.env.POLYGONSCAN_API_KEY || "",
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY || "",
       polygonAmoy: process.env.POLYGONSCAN_API_KEY || '',
+      base: process.env.BASESCAN_API_KEY || '',
+      // "base-sepolia": process.env.BASESCAN_API_KEY || '',
+      optimisticEthereum: process.env.OPSCAN_API_KEY || ''
     },
     customChains: [
       {
@@ -73,6 +81,22 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: 'https://api-amoy.polygonscan.com/api',
           browserURL: 'https://amoy.polygonscan.com/',
+        },
+      },
+      {
+        network: "base",
+        chainId: 8453,
+        urls: {
+          apiURL: "https://api.basescan.org/api",
+          browserURL: "https://basescan.org/",
+        },
+      },
+      {
+        network: "baseSepolia",
+        chainId: 84532,
+        urls: {
+          apiURL: "https://api-sepolia.basescan.org/api",
+          browserURL: "https://sepolia.basescan.org/",
         },
       },
     ],
@@ -90,6 +114,12 @@ const config: HardhatUserConfig = {
   },
   gasReporter: {
     enabled: !!process.env.REPORT_GAS,
+  },
+  abiExporter: {
+    path: './abis',
+    runOnCompile: true,
+    only: [':Dimo$'],
+    format: 'json'
   }
 };
 
