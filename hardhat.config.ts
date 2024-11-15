@@ -59,6 +59,11 @@ const config: HardhatUserConfig = {
       url: process.env.BASE_SEPOLIA_URL || "",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
+    optimisticEthereum: {
+      allowUnlimitedContractSize: true,
+      url: process.env.OP_URL || "",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    }
   },
   etherscan: {
     apiKey: {
@@ -66,7 +71,8 @@ const config: HardhatUserConfig = {
       polygon: process.env.POLYGONSCAN_API_KEY || "",
       polygonAmoy: process.env.POLYGONSCAN_API_KEY || '',
       base: process.env.BASESCAN_API_KEY || '',
-      "base-sepolia": process.env.BASESCAN_API_KEY || '',
+      // "base-sepolia": process.env.BASESCAN_API_KEY || '',
+      optimisticEthereum: process.env.OPSCAN_API_KEY || ''
     },
     customChains: [
       {

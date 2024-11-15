@@ -51,5 +51,14 @@
         "bridge": {
             "address": "0x4200000000000000000000000000000000000010"
         }
+    },
+    "optimism": {
+        "Dimo": {
+            "proxy": "0x5eAA326fB2fc97fAcCe6A79A304876daD0F2e96c",
+            "implementation": "0x6c14212837e6F0BCc7D6dbb48B3Ff89E4AD1c3C3"
+        },
+        "bridge": {
+            "address": "0x4200000000000000000000000000000000000010"
+        }
     }
 }
