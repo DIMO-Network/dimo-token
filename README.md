@@ -78,3 +78,7 @@ You can run the test suite with the following command:
 # Runs test suite
 npm run test
 ```
+
+## Audit
+
+[Sayfer - October 2022](https://sayfer.io/audits/smart-contract-audit-report-for-dimo/)
