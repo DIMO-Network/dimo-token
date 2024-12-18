@@ -23,14 +23,20 @@
             "implementation": "0x5fEE07De7406902c335664E278216bf9b0d1c597"
         }
     },
+    "sepolia": {
+        "Omid": {
+            "proxy": "0xA40C0a17c21fe335308Be305a3315B14bBeD5157",
+            "implementation": "0x5ae96Ab04908B81769C97CF64564677844D39B88"
+        }
+    },
     "mumbai": {
-        "Dimo": {
+        "Omid": {
             "proxy": "0x80ee7ec4493a1d7975ab900f94db25ba7c688201",
             "implementation": "0xEb06fe95CC5f499c74FAFE347389F9F591e7ff62"
         }
     },
     "amoy": {
-        "Dimo": {
+        "Omid": {
             "proxy": "0x21cFE003997fB7c2B3cfe5cf71e7833B7B2eCe10",
             "implementation": "0x2B06014980c3d28644241ba87b8518C236c4B75b"
         },
@@ -41,6 +47,15 @@
         "DimoGovernor": {
             "proxy": "0x56719c69b665123ada4f740b1386ec60e1ad701b",
             "implementation": "0x175b8196a9c922b4f512904c1632469f7fcb78c6"
+        }
+    },
+    "baseSepolia": {
+        "Omid": {
+            "proxy": "0xA40C0a17c21fe335308Be305a3315B14bBeD5157",
+            "implementation": "0x5ae96Ab04908B81769C97CF64564677844D39B88"
+        },
+        "bridge": {
+            "address": "0x4200000000000000000000000000000000000010"
         }
     },
     "base": {
