@@ -12,7 +12,7 @@
         },
         "TestDev": {
             "proxy": "0xf03952D15AD15187D79e8eF4611A41F2D034b368",
-            "implementation": "0xe0ac3E80B3B266C53272aE3dBE2BE91654c3decb"
+            "implementation": "0x48c23aD1F6D4CA70ae68bfeb75C4f6deEa62115E"
         },
         "TimeLock": {
             "proxy": "0x9F9859757b95100E2eC3d5E344608Dbe361dAaf4",
@@ -62,6 +62,10 @@
         "Dimo": {
             "proxy": "0x5eAA326fB2fc97fAcCe6A79A304876daD0F2e96c",
             "implementation": "0x6c14212837e6F0BCc7D6dbb48B3Ff89E4AD1c3C3"
+        },
+        "TestDevBase": {
+            "proxy": "0x341704C0b697d454B8918225A6d0fB5be6d87C0D",
+            "implementation": "0xedFD19B9347ac3d38a66Fc3ee26de27D1D0d7154"
         },
         "bridge": {
             "address": "0x4200000000000000000000000000000000000010"
