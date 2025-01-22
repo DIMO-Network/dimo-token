@@ -8,7 +8,7 @@
     "polygon": {
         "Dimo": {
             "proxy": "0xe261d618a959afffd53168cd07d12e37b26761db",
-            "implementation": "0x379e5770d36Bf563C267097E3fA54DdCcbEFC00B"
+            "implementation": "0xA5caB7293A3D6a4732b1260E7202746163859926"
         },
         "TestDev": {
             "proxy": "0xf03952D15AD15187D79e8eF4611A41F2D034b368",

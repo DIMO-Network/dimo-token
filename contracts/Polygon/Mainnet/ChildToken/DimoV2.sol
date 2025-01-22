@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
-contract Dimo is
+contract DimoChildTokenV2 is
     ERC20Upgradeable,
     ERC165Upgradeable,
     AccessControlUpgradeable,
