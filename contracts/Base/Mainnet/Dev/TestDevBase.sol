@@ -10,10 +10,10 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import {IOptimismMintableERC20, ILegacyMintableERC20} from "./IOptimismMintableERC20.sol";
 
 /**
- * @title Dimo
- * @dev DIMO is an ERC20 token deployed on the Base network. It was bridged from the Ethereum mainnet
+ * @title TestDevBase
+ * @dev Dummy token for testing purposes
  */
-contract DimoBaseV1 is
+contract TestDevBase is
     Initializable,
     ERC20Upgradeable,
     ERC20VotesUpgradeable,
@@ -49,7 +49,7 @@ contract DimoBaseV1 is
         address _bridge,
         address _remoteToken
     ) public initializer {
-        __ERC20_init("Dimo", "DIMO");
+        __ERC20_init("TestDevBase", "TDB");
         __ERC20Votes_init();
         __AccessControl_init();
         __Pausable_init();
@@ -60,8 +60,13 @@ contract DimoBaseV1 is
         DECIMALS = 18;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(PAUSER_ROLE, msg.sender);
+        _setupRole(MINTER_ROLE, msg.sender);
+        _setupRole(UPGRADER_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, BRIDGE);
         _setupRole(BURNER_ROLE, BRIDGE);
+
+        _mint(msg.sender, 1000000000 ether);
     }
 
     /**
@@ -114,6 +119,16 @@ contract DimoBaseV1 is
     {
         _burn(_from, _amount);
         emit Burn(_from, _amount);
+    }
+
+    /**
+     * @notice Function required to integrate with Wormhole NttManager
+     * @param amount The amount of tokens to burn
+     * @dev Can only be called by accounts with the BURNER_ROLE
+     */
+    function burn(uint256 amount) external onlyRole(BURNER_ROLE) {
+        _burn(_msgSender(), amount);
+        emit Burn(_msgSender(), amount);
     }
 
     /**
