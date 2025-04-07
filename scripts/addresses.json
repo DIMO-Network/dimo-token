@@ -52,7 +52,7 @@
     "baseSepolia": {
         "Omid": {
             "proxy": "0xA40C0a17c21fe335308Be305a3315B14bBeD5157",
-            "implementation": "0x5ae96Ab04908B81769C97CF64564677844D39B88"
+            "implementation": "0xCB01C169A74aA37996510a286dDCA82A78821ff5"
         },
         "bridge": {
             "address": "0x4200000000000000000000000000000000000010"
