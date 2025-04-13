@@ -3,6 +3,10 @@
         "Dimo": {
             "proxy": "0x5fab9761d60419c9eeebe3915a8fa1ed7e8d2e1b",
             "implementation": "0xc67872EB67cdaB3d42270D100c491fd70ab1A448"
+        },
+        "TestDev": {
+            "proxy": "0xF14eee399E9537E8640D5475B96b5eba2E2915a4",
+            "implementation": "0xf9Cd476D583Cc221caA244e7Db1e439A39083682"
         }
     },
     "polygon": {
