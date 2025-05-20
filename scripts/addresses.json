@@ -52,7 +52,7 @@
     "baseSepolia": {
         "Omid": {
             "proxy": "0xA40C0a17c21fe335308Be305a3315B14bBeD5157",
-            "implementation": "0x5ae96Ab04908B81769C97CF64564677844D39B88"
+            "implementation": "0xCB01C169A74aA37996510a286dDCA82A78821ff5"
         },
         "bridge": {
             "address": "0x4200000000000000000000000000000000000010"
@@ -61,7 +61,7 @@
     "base": {
         "Dimo": {
             "proxy": "0x5eAA326fB2fc97fAcCe6A79A304876daD0F2e96c",
-            "implementation": "0xBcFA89dDcD8Ad4322c72b574ec66AAb9B8c17602"
+            "implementation": "0x464387c99bB59Aa8566CCb28669bA5f7cC240b4c"
         },
         "TestDevBase": {
             "proxy": "0x341704C0b697d454B8918225A6d0fB5be6d87C0D",

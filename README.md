@@ -82,3 +82,4 @@ npm run test
 ## Audit
 
 [Sayfer - October 2022](https://sayfer.io/audits/smart-contract-audit-report-for-dimo/)
+[Sayfer - March 2024](https://sayfer.io/audits/smart-contract-audit-report-for-dimo-4/)

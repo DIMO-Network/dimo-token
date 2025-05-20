@@ -55,11 +55,19 @@ contract Dimo is
         __Pausable_init();
         __UUPSUpgradeable_init();
 
+        require(_bridge != address(0), "Bridge cannot be zero address");
+        require(
+            _remoteToken != address(0),
+            "Remote token cannot be zero address"
+        );
+
         REMOTE_TOKEN = _remoteToken;
         BRIDGE = _bridge;
         DECIMALS = 18;
 
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(PAUSER_ROLE, msg.sender);
+        _setupRole(UPGRADER_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, BRIDGE);
         _setupRole(BURNER_ROLE, BRIDGE);
     }
